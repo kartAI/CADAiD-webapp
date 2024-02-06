@@ -3,9 +3,16 @@ import Box from '@mui/system/Box';
 import { Button } from "@mui/material";
 import { FileUpload, Opacity } from "@mui/icons-material";
 
-async function verifyDrawings(formData: any) {
+async function handleUpload(event: any) {
+    const files: any[] = event.target.files; 
+
     try {
-        const response = await fetch("http://localhost:8000", {
+        const formData = new FormData();
+        [...files].forEach((file, i) => {
+            formData.append(`uploaded_files`, file, file.name)
+        })
+        
+        const response = await fetch("http://localhost:8000/detect/", {
             method: "POST",
             body: formData,
         });
@@ -27,7 +34,15 @@ export default function DroppableBox() {
         <Droppable droppableId="droppable">
             {(provided) => (
             <Box component="section"sx={{ p: 2, border: '3px dashed green', borderRadius: '16px'}} ref={provided.innerRef} {...provided.droppableProps}>
-            Dra og slipp filene dine her &nbsp; &nbsp; <Button variant="contained"  endIcon={<FileUpload/>} color="success" sx={{ fontSize: 12}}>Last opp</Button>
+            Dra og slipp filene dine her &nbsp; &nbsp; <Button variant="contained"  endIcon={<FileUpload/>} color="success" sx={{ fontSize: 12}}>
+                Last opp
+                <input
+                    type="file"
+                    id="file-input"
+                    accept=".jpg, .jpeg, .png"
+                    onChange={handleUpload}
+                />
+                </Button>
             {provided.placeholder} 
             </Box>
         )}
