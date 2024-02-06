@@ -4,6 +4,8 @@ import { Button } from "@mui/material";
 import { FileUpload, Opacity } from "@mui/icons-material";
 import { green } from "@mui/material/colors";
 
+//Todo: Legge til droppable funksjonalitet
+
 export default function DroppableBox() {
     return (
         <Droppable droppableId="droppable">

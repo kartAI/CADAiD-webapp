@@ -33,5 +33,4 @@ export default function UploadedFileList() {
             </Grid>
         </Grid>
     );
-    // Her kommer liste, Interacive List - Avatar with text
 }
