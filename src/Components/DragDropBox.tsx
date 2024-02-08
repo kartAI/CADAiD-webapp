@@ -24,9 +24,6 @@ async function handleUpload(event: any) {
     
 }
 
-//const files = document.querySelector('input[type="file"][multiple]');
-//const formData = new FormData();
-
 
 
 export default function DroppableBox() {
