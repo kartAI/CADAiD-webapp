@@ -3,6 +3,6 @@ import Alert from "@mui/material/Alert";
 
 export default function InfoBox() {
     return(
-       <Alert severity="info">Her kommer det viktig informasjon som brukeren må vite om hvilke vedlegg som skal lastes opp</Alert>
+       <Alert severity="info">OBS: Last opp alle nødvendige vedlegg. Veldig mange søknader er mangelfulle fordi tegningene ikke tilfredsstiller kravene i plan- og bygningsloven.</Alert>
     );
 }
