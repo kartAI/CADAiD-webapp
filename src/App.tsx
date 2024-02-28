@@ -17,11 +17,11 @@ function App() {
         <Grid item xs={12} mt={2}>
           <Header/>
         </Grid>
-        <Grid item xs={12}>
-          <Checklist/>
-        </Grid>
-        <Grid item xs={12} mb={4}>
+        <Grid item xs={12} mb={2}>
           <InfoBox/>
+        </Grid>
+        <Grid item xs={12} mb={2}>
+          <Checklist/>
         </Grid>
         <Grid item xs={12}>
           <UploadFiles/>
