@@ -11,7 +11,7 @@ import UploadFiles from './UploadFiles';
 function App() {
 
   return (
-    <Container maxWidth={'sm'} component={Paper}>
+    <Container maxWidth={'md'} component={Paper}>
       <Grid container spacing={2}>
         <Grid item xs={12} mt={2}>
           <Header/>
