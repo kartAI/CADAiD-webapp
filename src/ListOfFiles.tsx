@@ -29,8 +29,8 @@ const ListOfFiles = ({files, onDelete, loading}: Props) => {
                         </Tooltip>
 
                         <Box display='flex' gap={1}>
-                            {file?.drawing_type && Array.isArray(file.drawing_type) && file.drawing_type.map((type) => (
-                                <Chip label={type.toUpperCase()}/>
+                            {file?.drawing_type && Array.isArray(file.drawing_type) && file.drawing_type.map((type, i) => (
+                                <Chip label={type.toUpperCase()} key={`${i}-${type}`}/>
                             ))}
                             <IconButton edge="end" onClick={() => onDelete(file.file_name)}>
                                 <DeleteIcon />

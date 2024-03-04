@@ -1,12 +1,7 @@
-import DroppableBox from './Components/DragDropBox';
 import Header from './Components/Header';
-import UploadedFileList from './Components/UploadedList';
 import InfoBox from './Components/InformationBox';
-import { DragDropContext } from 'react-beautiful-dnd';
 import { Container, Grid, Paper } from '@mui/material';
 import UploadFiles from './UploadFiles';
-
-
 
 function App() {
 
@@ -25,8 +20,6 @@ function App() {
   
       </Grid>
     </Container>
-    
-    
   );
 }
 
