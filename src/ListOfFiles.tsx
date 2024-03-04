@@ -43,15 +43,21 @@ const ListOfFiles = ({files, onDelete, loading}: Props) => {
                         : (
                             <Box style={{backgroundColor: '#f5f5f5'}}>
                                 <Grid container columnSpacing={{ xs: 2 }} p={2}>
+                                    {file.cardinal_direction &&
                                     <Grid item>
-                                        {file.cardinal_direction && <Chip label={file.cardinal_direction} color="warning"  icon={<WarningIcon fontSize="small" />} /> }
+                                        <Chip label={file.cardinal_direction} color="warning"  icon={<WarningIcon fontSize="small" />} /> 
                                     </Grid>
+                                    }                                   
+                                    {file.room_names &&
                                     <Grid item> 
-                                        {file.room_names && <Chip icon={<WarningIcon fontSize="small" />} label={file.room_names} color="warning"/>}
+                                         <Chip icon={<WarningIcon fontSize="small" />} label={file.room_names} color="warning"/>
                                     </Grid>
+                                    }
+                                    {file.scale && 
                                     <Grid item >
-                                        {file.scale && <Chip icon={<WarningIcon fontSize="small"/>} label={file.scale} color="warning"/>}
+                                        <Chip icon={<WarningIcon fontSize="small"/>} label={file.scale} color="warning"/>
                                     </Grid>
+                                    }
                                 </Grid>
                             </Box>
                     )}
