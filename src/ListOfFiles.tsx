@@ -41,6 +41,8 @@ const ListOfFiles = ({files, onDelete, loading}: Props) => {
                     {loading[file.file_name] ?
                         <LinearProgress color="inherit" />
                         : (
+                            <>
+                            {(file.room_names || file.scale || file.cardinal_direction) &&
                             <Box style={{backgroundColor: '#f5f5f5'}}>
                                 <Grid container columnSpacing={{ xs: 2 }} p={2}>
                                     {file.cardinal_direction &&
@@ -60,6 +62,8 @@ const ListOfFiles = ({files, onDelete, loading}: Props) => {
                                     }
                                 </Grid>
                             </Box>
+                            }
+                            </>
                     )}
                 </Paper>
             </Box>
