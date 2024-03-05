@@ -11,10 +11,10 @@ export default function Checklist({drawingTypes}: Props) {
     const [secondary, setSecondary] = React.useState(false)
 
     const drawing_types = [
-        "plantegning",
-        "fasade",
-        "situasjonskart",
-        '"snitt'
+        "Plantegning",
+        "Fasade",
+        "Situasjonskart",
+        'Snitt'
     ]
 
     return(
