@@ -36,9 +36,20 @@ const UploadFiles = () => {
         })
     }
 
-
     const handelDeleteUploaded = (fileName: string) => {
-        setUploadedFiles(f => f.filter(ff => ff.file_name !== fileName))
+        const files = uploadedFiles.filter(ff => ff.file_name !== fileName)
+        setUploadedFiles(files)
+      
+        setDrawingTypes(t => {
+            let test: string[] = []
+                files.forEach(file => {
+                    if (Array.isArray(file.drawing_type)) {
+                        test = [...test, ...file.drawing_type]
+                    }
+                })
+            return [...test]
+            })
+      
     }
 
     return (
