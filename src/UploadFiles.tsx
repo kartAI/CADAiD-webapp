@@ -1,60 +1,71 @@
 import { useState } from "react";
 import DropBox from "./Components/DropBox"
-import ListOfFiles from "./ListOfFiles";
-import StatusBox from "./Components/StatusBox";
-import { Box } from "@mui/material";
+import ListOfFiles from "./ListOfFiles"
+import { UploadedFile } from "./types";
+import Checklist from "./Components/Checklist";
 
 const UploadFiles = () => {
 
-    const [uploadedFiles, setUploadedFiles] = useState<Array<File>>([])
-    const [response, setResponse] = useState<Record<string, Record<string, {'message': string, 'status': string}>>>({})
+    const [uploadedFiles, setUploadedFiles] = useState<Array<UploadedFile>>([])
+    const [loading, setLoading] = useState({})
+    const [drawingTypes, setDrawingTypes] = useState<Array<string>>([])
 
     const handleUpload = async(acceptedFiles: File[]) => {
-
+        
         const formData = new FormData();
-        acceptedFiles.forEach((file) => {
+        acceptedFiles.forEach((file: File) => {
             formData.append(`uploaded_files`, file, file.name)
+            setLoading(l => {return {...l, [file.name]: true}})
         })
 
-        setUploadedFiles([...uploadedFiles, ...acceptedFiles])
+        setUploadedFiles(prevUploadedFiles => [
+            ...prevUploadedFiles,
+            ...acceptedFiles.map(file => {return {'file_name': file.name} as any})
+          ])
         
         const responseApi = await fetch("http://localhost:8000/detect/", {
             method: "POST",
             body: formData,
         });
-        const drawingResult = await responseApi.json();
+        const drawingResult = await responseApi.json()
         console.log(drawingResult)
-        setResponse({...response, ...drawingResult})
+        setUploadedFiles([...uploadedFiles, ...drawingResult])
+        drawingResult.map((res: UploadedFile) =>  {
+            setLoading(l => {return {...l, [res.file_name]: false}})
+            if (Array.isArray(res.drawing_type))  setDrawingTypes(t => [...t, ...res.drawing_type as any])
+        })
     }
 
-    const handelDeleteUploaded = (file: File) => {
-        setUploadedFiles(f => f.filter(ff => ff.name !== file.name))
-        setResponse(r => {
-            const filtered = Object.fromEntries(
-                Object.entries(r).filter(([key]) => key !== file.name)
-            )
-            return filtered
-        })
+    const handelDeleteUploaded = (fileName: string) => {
+        const files = uploadedFiles.filter(ff => ff.file_name !== fileName)
+        setUploadedFiles(files)
+      
+        setDrawingTypes(t => {
+            let test: string[] = []
+                files.forEach(file => {
+                    if (Array.isArray(file.drawing_type)) {
+                        test = [...test, ...file.drawing_type]
+                    }
+                })
+            return [...test]
+            })
+      
     }
 
     return (
         <>
+            <Checklist drawingTypes={drawingTypes}/>
+            <br/>
             <DropBox
                 onDrop={handleUpload}
             />
+            <br/>
             <ListOfFiles
                 files={uploadedFiles}
                 onDelete={handelDeleteUploaded}
+                loading={loading}
             />
 
-            {/* Dette må flyttes og skrives om. Ikke intuitivt */}
-            {Object.values(response)
-                .map(type => Object.values(type)
-                    .map(({message, status}, i) => (
-                        <Box p={2} key={i}>
-                            <StatusBox text={message} status={status as any}/>
-                        </Box>
-            )))}
         </>
     )
 }
