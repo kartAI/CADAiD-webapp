@@ -21,7 +21,7 @@ export default function Checklist({drawingTypes}: Props) {
         <Box style={{ backgroundColor: 'rgba(30, 116, 0, 0.2)'}}>
             <List dense={false}>
                 {drawing_types.map((type, i) => (
-                    <ListItem disabled={!drawingTypes.includes(type)}>
+                    <ListItem disabled={!drawingTypes.includes(type.toLocaleLowerCase())}>
                         <ListItemIcon>
                             <CheckIcon color='success'/>
                         </ListItemIcon>
