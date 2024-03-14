@@ -54,11 +54,11 @@ const UploadFiles = () => {
 
     return (
         <>
-            <Checklist drawingTypes={drawingTypes}/>
-            <br/>
             <DropBox
                 onDrop={handleUpload}
             />
+            <br/>
+            <Checklist drawingTypes={drawingTypes}/>
             <br/>
             <ListOfFiles
                 files={uploadedFiles}

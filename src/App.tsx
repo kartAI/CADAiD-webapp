@@ -6,7 +6,8 @@ import UploadFiles from './UploadFiles';
 function App() {
 
   return (
-    <Container maxWidth={'sm'} component={Paper}>
+    <div style={{backgroundColor: "#D1E8E2", height: "100vh", width: "100vw"}}>
+    <Container maxWidth={'sm'} component={Paper} >
       <Grid container spacing={2}>
         <Grid item xs={12} mt={2}>
           <Header/>
@@ -20,6 +21,7 @@ function App() {
   
       </Grid>
     </Container>
+    </div>
   );
 }
 
