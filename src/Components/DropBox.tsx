@@ -16,8 +16,8 @@ type Props = {
 const DropBox = ({ onDrop }: Props) => {
 
     const accept = {
-        'application/pdf': [],
-        'image/png': [],
+        'application/pdf': ['.pdf'],
+        'image/png': ['.png'],
         'image/jpeg': ['.jpg', '.jpeg'],
     }
 
