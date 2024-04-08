@@ -3,6 +3,8 @@ import DropBox from "./Components/DropBox"
 import ListOfFiles from "./ListOfFiles"
 import { UploadedFile } from "./types";
 import Checklist from "./Components/Checklist";
+import ListOfDocs from './ListOfDocuments';
+
 
 const UploadFiles = () => {
 
@@ -60,7 +62,7 @@ const UploadFiles = () => {
             <br/>
             <Checklist drawingTypes={drawingTypes}/>
             <br/>
-            <ListOfFiles
+            <ListOfDocs
                 files={uploadedFiles}
                 onDelete={handelDeleteUploaded}
                 loading={loading}

@@ -20,7 +20,7 @@ const ListOfFiles = ({files, onDelete, loading}: Props) => {
 
                         <Tooltip title={file.file_name}>
                             <Typography
-                                variant='h6'
+                                variant='body1'
                                 width='50%'
                                 noWrap
                             >

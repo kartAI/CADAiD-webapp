@@ -21,7 +21,7 @@ Tegningene skal gi et korrekt bilde av bygningen/konstruksjonen. Tegningen skal 
 Snitt-tegninger skal være i målestokk 1:100, eller for større bygg kan de være i målestokk 1:200. 1:100 betyr at 1 cm på papiret tilsvarer 1 meter i virkeligheten. Oppgi valgt målestokk på tegningen.
 
 <h4>Ta utgangspunkt i siste godkjente tegninger</h4>
-Ta alltid utgangspunkt i det siste som ble godkjent hos kommunen. Dette ser du i de eksisterende bygningstegningene (f.eks plan/fasade/snitt) som du kan kjøpe hos kommunen eller på <Link href="https://e-torg.no/forside" target="_blank" rel="noopener">e-torg</Link>. 
+Ta alltid utgangspunkt i det siste som ble godkjent hos kommunen. Dette ser du i de eksisterende bygningstegningene (f.eks plan/fasade/snitt) som du kan kjøpe hos kommunen eller på <Link href="https://e-torg.no/forside" target="_blank" rel="noopener" color="#1e7400">e-torg</Link>. 
 Ønsker du å tegne eksisterende tegninger selv må du sørge for at alt du tegner er godkjent hos kommunen gjennom tidligere byggesaker.
 
 <h4>Ønsker du hjelp til utforming av tegninger?</h4>
@@ -41,10 +41,10 @@ export default function Header() {
 
     return (
         <Box component="section">
-            <Typography variant='h4' >
+            <Typography variant='h5' >
                 {headercontent}
-                <IconButton onClick={handleClickOpen}>
-                    <HelpIcon />
+                <IconButton onClick={handleClickOpen} size="small">
+                    <HelpIcon/>
                 </IconButton>
                 <Dialog onClose={handleClose} open={open}>
                     <DialogTitle sx={{ m: 0, p: 2 }}>
