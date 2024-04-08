@@ -19,7 +19,7 @@ export default function Checklist({drawingTypes}: Props) {
 
     return(
         <Box style={{ backgroundColor: 'rgba(30, 116, 0, 0.2)'}}>
-            <List dense={false}>
+            <List dense={true}>
                 {drawing_types.map((type, i) => (
                     <ListItem disabled={!drawingTypes.includes(type.toLocaleLowerCase())} key={`${i}-${type}`}>
                         <ListItemIcon>

@@ -1,43 +1,40 @@
-import { IconButton, Box, Typography, Tooltip, Grid, LinearProgress, Paper } from "@mui/material"
-import DeleteIcon from '@mui/icons-material/Delete'
-import WarningIcon from '@mui/icons-material/Warning'
-import Chip from '@mui/material-next/Chip';
 import { UploadedFile } from "./types"
+import { Accordion, AccordionActions, AccordionSummary, AccordionDetails, Typography, Tooltip, Box, IconButton, Chip, Grid, LinearProgress} from "@mui/material"
+import DeleteIcon from '@mui/icons-material/Delete';
+import WarningIcon from '@mui/icons-material/Warning'
 
 type Props = {
     files: UploadedFile[]
     onDelete: (file: string) => void
     loading: any
-}
+};
 
-const ListOfFiles = ({files, onDelete, loading}: Props) => {
-    return (
+export default function ListOfDocs ( {files, onDelete, loading}: Props) {
+    return(
         <>
-        {files.map((file, i) => (
-            <Box key={`${i}-${file.file_name}`} mt={2}>
-                <Paper>
-                    <Box style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'row'}} p={2}>
-
-                        <Tooltip title={file.file_name}>
-                            <Typography
+        {files.map((file, i) => ( 
+            <Box key={`${i}-${file.file_name}`} mt={1}>
+                <Accordion>
+                    <AccordionSummary>
+                        <Typography 
                                 variant='body1'
                                 width='50%'
                                 noWrap
-                            >
-                                {file.file_name}
-                            </Typography>
-                        </Tooltip>
-
-                        <Box display='flex' gap={1}>
-                            {file?.drawing_type && Array.isArray(file.drawing_type) && file.drawing_type.map((type, i) => (
+                        >
+                            {file.file_name}
+                        </Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                    <Box display='flex' gap={1}>
+                            {file?.drawing_type && Array.isArray(file.drawing_type) && file.drawing_type.map((type: any, i: any) => (
                                 <Chip label={type.toUpperCase()} key={`${i}-${type}`}/>
                             ))}
                             <IconButton edge="end" onClick={() => onDelete(file.file_name)}>
                                 <DeleteIcon />
                             </IconButton>
                         </Box>
-                        
-                    </Box>
+                    </AccordionDetails>
+
                     {loading[file.file_name] ?
                         <LinearProgress color="inherit" />
                         : (
@@ -65,11 +62,11 @@ const ListOfFiles = ({files, onDelete, loading}: Props) => {
                             }
                             </>
                     )}
-                </Paper>
+                </Accordion>
             </Box>
         ))}
-        </>
-    )
-}
 
-export default ListOfFiles
+      
+        </>
+    );     
+}

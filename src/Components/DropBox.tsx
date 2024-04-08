@@ -2,8 +2,10 @@ import { DropEvent, FileRejection, useDropzone } from 'react-dropzone'
 import {
     Box,
     Button,
-    Typography
+    Typography,
+    Link
 } from '@mui/material'
+import { FileUpload } from '@mui/icons-material'
 
 type Props = {
     onDrop: (
@@ -28,7 +30,8 @@ const DropBox = ({ onDrop }: Props) => {
     })
 
     return (
-        <Box component="section"sx={{ border: '3px dashed green', borderRadius: '16px'}}>
+        
+        <Box component="section"sx={{ border: '2px dashed green'}}>
             <Box {...getRootProps()} style={{ backgroundColor: 'rgba(30, 116, 0, 0.2)'}}>
                 <Box pt={4} pb={4}>
                     <Box display='flex'
@@ -38,13 +41,13 @@ const DropBox = ({ onDrop }: Props) => {
                         gap={2}>
                             <input {...getInputProps()} />
 
-                            <Typography variant='h6' textAlign='center'>
-                                Dra og slipp filene dine her eller
+                            <Typography variant='body1' textAlign='center'>
+                               Dra og slipp filene dine her, eller <Link color='#1e7400' variant='inherit'>
+                                last opp en fil
+                            </Link>
                             </Typography>
 
-                            <Button color='success' variant='contained'>
-                                Last opp
-                            </Button>
+                            
 
                     </Box>
                 </Box>
