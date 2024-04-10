@@ -1,7 +1,8 @@
 import { UploadedFile } from "./types"
-import { Accordion, AccordionActions, AccordionSummary, AccordionDetails, Typography, Tooltip, Box, IconButton, Chip, Grid, LinearProgress} from "@mui/material"
+import { Tooltip, Box, IconButton, LinearProgress, Link, Alert} from "@mui/material"
 import DeleteIcon from '@mui/icons-material/Delete';
-import WarningIcon from '@mui/icons-material/Warning'
+import ErrorOutlineRoundedIcon from '@mui/icons-material/ErrorOutlineRounded';
+import { useState } from "react";
 
 type Props = {
     files: UploadedFile[]
@@ -10,61 +11,68 @@ type Props = {
 };
 
 export default function ListOfDocs ( {files, onDelete, loading}: Props) {
+    const [expanded, setExpanded] = useState<{[id: string]: boolean}>({})
+
+    const toggleExpand = (id: string) => setExpanded((prev) => ({
+        ...prev,
+        [id]: !prev[id]
+      }))
+
+    const req = ['cardinal_direction', 'room_names', 'scale']
+    
     return(
         <>
-        {files.map((file, i) => ( 
+        
+        {files.map((file, i) => {
+            const isNotValid = (file.room_names || file.scale || file.cardinal_direction)
+            return ( 
             <Box key={`${i}-${file.file_name}`} mt={1}>
-                <Accordion>
-                    <AccordionSummary>
-                        <Typography 
-                                variant='body1'
-                                width='50%'
-                                noWrap
-                        >
-                            {file.file_name}
-                        </Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                    <Box display='flex' gap={1}>
-                            {file?.drawing_type && Array.isArray(file.drawing_type) && file.drawing_type.map((type: any, i: any) => (
-                                <Chip label={type.toUpperCase()} key={`${i}-${type}`}/>
-                            ))}
+
+                    <Box width='100%' display='flex' flexDirection='row'>
+                       
+                        <Box display='flex' justifyContent='space-between' width='100%'>
+                            <Box gap={1}>
+                            {/* <Tooltip title={file.file_name}> */}
+                            <Link
+                                component="button"
+                                variant="subtitle1"
+                                onClick={() => toggleExpand(file.file_name)}
+                                underline="hover"
+                                color='#000'
+                                >
+                                    {file.file_name}
+                                </Link>
+                        
+                            {/* </Tooltip> */}
+                            {isNotValid &&
+                            <Tooltip title="Filen inneholder mangler. Klikk for detaljer">
+                                <IconButton onClick={() => toggleExpand(file.file_name)}>
+                                    <ErrorOutlineRoundedIcon color="warning"/>
+                                </IconButton>
+                            </Tooltip>
+                        }
+                        </Box>
                             <IconButton edge="end" onClick={() => onDelete(file.file_name)}>
                                 <DeleteIcon />
                             </IconButton>
                         </Box>
-                    </AccordionDetails>
-
-                    {loading[file.file_name] ?
-                        <LinearProgress color="inherit" />
-                        : (
-                            <>
-                            {(file.room_names || file.scale || file.cardinal_direction) &&
-                            <Box style={{backgroundColor: '#f5f5f5'}}>
-                                <Grid container columnSpacing={{ xs: 2 }} p={2}>
-                                    {file.cardinal_direction &&
-                                    <Grid item>
-                                        <Chip label={file.cardinal_direction} color="warning"  icon={<WarningIcon fontSize="small" />} /> 
-                                    </Grid>
-                                    }                                   
-                                    {file.room_names &&
-                                    <Grid item> 
-                                         <Chip icon={<WarningIcon fontSize="small" />} label={file.room_names} color="warning"/>
-                                    </Grid>
-                                    }
-                                    {file.scale && 
-                                    <Grid item >
-                                        <Chip icon={<WarningIcon fontSize="small"/>} label={file.scale} color="warning"/>
-                                    </Grid>
-                                    }
-                                </Grid>
-                            </Box>
-                            }
-                            </>
-                    )}
-                </Accordion>
+                        {loading[file.file_name] &&
+                            <LinearProgress color="inherit" />
+                        }
+                        </Box>
+                    {expanded[file.file_name] && isNotValid &&
+                        <>
+                            {req.map(r => (
+                                <>
+                                {file[r as keyof UploadedFile]?.length &&
+                                    <Alert severity="warning">{file[r as keyof UploadedFile]}</Alert>
+                                }
+                                </>
+                            ))}
+                        </>
+                    }
             </Box>
-        ))}
+        )})}
 
       
         </>
