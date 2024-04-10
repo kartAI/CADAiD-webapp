@@ -1,8 +1,10 @@
 import { useState } from "react";
 import DropBox from "./Components/DropBox"
-import ListOfFiles from "./ListOfFiles"
 import { UploadedFile } from "./types";
 import Checklist from "./Components/Checklist";
+import ListOfDocs from './ListOfDocuments';
+import { Typography } from "@mui/material";
+
 
 const UploadFiles = () => {
 
@@ -54,13 +56,24 @@ const UploadFiles = () => {
 
     return (
         <>
+            <Typography>
+              Din søknad krever følgende byggesakstegninger:
+            </Typography>
+            <br/>
             <Checklist drawingTypes={drawingTypes}/>
             <br/>
+            <Typography>
+              Last opp:
+            </Typography>
+    
+            <br/>
+
             <DropBox
                 onDrop={handleUpload}
             />
             <br/>
-            <ListOfFiles
+        
+            <ListOfDocs
                 files={uploadedFiles}
                 onDelete={handelDeleteUploaded}
                 loading={loading}

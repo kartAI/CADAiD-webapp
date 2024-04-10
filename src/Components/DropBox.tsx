@@ -1,8 +1,8 @@
 import { DropEvent, FileRejection, useDropzone } from 'react-dropzone'
 import {
     Box,
-    Button,
-    Typography
+    Typography,
+    Link
 } from '@mui/material'
 
 type Props = {
@@ -16,8 +16,8 @@ type Props = {
 const DropBox = ({ onDrop }: Props) => {
 
     const accept = {
-        'application/pdf': [],
-        'image/png': [],
+        'application/pdf': ['.pdf'],
+        'image/png': ['.png'],
         'image/jpeg': ['.jpg', '.jpeg'],
     }
 
@@ -28,8 +28,9 @@ const DropBox = ({ onDrop }: Props) => {
     })
 
     return (
-        <Box component="section"sx={{ border: '3px dashed green', borderRadius: '16px'}}>
-            <Box {...getRootProps()} style={{ backgroundColor: 'rgba(30, 116, 0, 0.2)'}}>
+        
+        <Box component="section"sx={{ border: '2px dashed green', borderRadius: '20px'}}>
+            <Box {...getRootProps()} style={{ backgroundColor: 'rgba(30, 116, 0, 0.2)', borderRadius: '20px'}}>
                 <Box pt={4} pb={4}>
                     <Box display='flex'
                         flexDirection='row'
@@ -38,13 +39,13 @@ const DropBox = ({ onDrop }: Props) => {
                         gap={2}>
                             <input {...getInputProps()} />
 
-                            <Typography variant='h6' textAlign='center'>
-                                Dra og slipp filene dine her eller
+                            <Typography variant='body1' textAlign='center'>
+                               Dra og slipp filene dine her, eller <Link color='#1e7400' variant='inherit'>
+                                last opp en fil
+                            </Link>
                             </Typography>
 
-                            <Button color='success' variant='contained'>
-                                Last opp
-                            </Button>
+                            
 
                     </Box>
                 </Box>

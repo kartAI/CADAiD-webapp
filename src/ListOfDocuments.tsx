@@ -1,0 +1,80 @@
+import { UploadedFile } from "./types"
+import { Tooltip, Box, IconButton, LinearProgress, Link, Alert} from "@mui/material"
+import DeleteIcon from '@mui/icons-material/Delete';
+import ErrorOutlineRoundedIcon from '@mui/icons-material/ErrorOutlineRounded';
+import { useState } from "react";
+
+type Props = {
+    files: UploadedFile[]
+    onDelete: (file: string) => void
+    loading: any
+};
+
+export default function ListOfDocs ( {files, onDelete, loading}: Props) {
+    const [expanded, setExpanded] = useState<{[id: string]: boolean}>({})
+
+    const toggleExpand = (id: string) => setExpanded((prev) => ({
+        ...prev,
+        [id]: !prev[id]
+      }))
+
+    const req = ['cardinal_direction', 'room_names', 'scale']
+    
+    return(
+        <>
+        
+        {files.map((file, i) => {
+            const isNotValid = (file.room_names || file.scale || file.cardinal_direction)
+            return ( 
+            <Box key={`${i}-${file.file_name}`} mt={1}>
+
+                    <Box width='100%' display='flex' flexDirection='row'>
+                       
+                        <Box display='flex' justifyContent='space-between' width='100%'>
+                            <Box gap={1}>
+                            {/* <Tooltip title={file.file_name}> */}
+                            <Link
+                                component="button"
+                                variant="subtitle1"
+                                onClick={() => toggleExpand(file.file_name)}
+                                underline="hover"
+                                color='#000'
+                                >
+                                    {file.file_name}
+                                </Link>
+                        
+                            {/* </Tooltip> */}
+                            {isNotValid &&
+                            <Tooltip title="Filen inneholder mangler. Klikk for detaljer">
+                                <IconButton onClick={() => toggleExpand(file.file_name)}>
+                                    <ErrorOutlineRoundedIcon color="warning"/>
+                                </IconButton>
+                            </Tooltip>
+                        }
+                        </Box>
+                            <IconButton edge="end" onClick={() => onDelete(file.file_name)}>
+                                <DeleteIcon />
+                            </IconButton>
+                        </Box>
+                        {loading[file.file_name] &&
+                            <LinearProgress color="inherit" />
+                        }
+                        </Box>
+                    {expanded[file.file_name] && isNotValid &&
+                        <>
+                            {req.map(r => (
+                                <>
+                                {file[r as keyof UploadedFile]?.length &&
+                                    <Alert severity="warning">{file[r as keyof UploadedFile]}</Alert>
+                                }
+                                </>
+                            ))}
+                        </>
+                    }
+            </Box>
+        )})}
+
+      
+        </>
+    );     
+}
