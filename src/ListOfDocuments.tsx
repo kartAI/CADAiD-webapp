@@ -3,6 +3,7 @@ import { Tooltip, Box, IconButton, LinearProgress, Link, Alert} from "@mui/mater
 import DeleteIcon from '@mui/icons-material/Delete';
 import ErrorOutlineRoundedIcon from '@mui/icons-material/ErrorOutlineRounded';
 import { useState } from "react";
+import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 
 type Props = {
     files: UploadedFile[]
@@ -19,6 +20,8 @@ export default function ListOfDocs ( {files, onDelete, loading}: Props) {
       }))
 
     const req = ['cardinal_direction', 'room_names', 'scale']
+
+    
     
     return(
         <>
@@ -28,16 +31,17 @@ export default function ListOfDocs ( {files, onDelete, loading}: Props) {
             return ( 
             <Box key={`${i}-${file.file_name}`} mt={1}>
 
-                    <Box width='100%' display='flex' flexDirection='row'>
-                       
-                        <Box display='flex' justifyContent='space-between' width='100%'>
-                            <Box gap={1}>
-                            {/* <Tooltip title={file.file_name}> */}
+                <Box width='100%' display='flex' flexDirection='row'>
+                    
+                    <Box display='flex' justifyContent='space-between' width='100%'>
+                        <Box gap={1}>
+                        {/* <Tooltip title={file.file_name}> */}
                             <Link
+                                style={{ cursor: ((isNotValid || typeof file.drawing_type === 'string')? 'pointer' : 'default') }}
                                 component="button"
                                 variant="subtitle1"
                                 onClick={() => toggleExpand(file.file_name)}
-                                underline="hover"
+                                underline={(isNotValid || typeof file.drawing_type === 'string') ? "hover" : 'none'}
                                 color='#000'
                                 >
                                     {file.file_name}
@@ -50,27 +54,39 @@ export default function ListOfDocs ( {files, onDelete, loading}: Props) {
                                     <ErrorOutlineRoundedIcon color="warning"/>
                                 </IconButton>
                             </Tooltip>
-                        }
+                            }
+                            {typeof file.drawing_type === 'string' &&
+                                <Tooltip title="Filen inneholder mangler. Klikk for detaljer">
+                                    <IconButton onClick={() => toggleExpand(file.file_name)}>
+                                        <WarningAmberIcon color="error"/>
+                                    </IconButton>
+                                </Tooltip>
+                            }
                         </Box>
+                        <Tooltip title='Slett fil'>
                             <IconButton edge="end" onClick={() => onDelete(file.file_name)}>
                                 <DeleteIcon />
                             </IconButton>
-                        </Box>
-                        {loading[file.file_name] &&
-                            <LinearProgress color="inherit" />
+                        </Tooltip>
+                    </Box>
+                </Box>
+                {loading[file.file_name] &&
+                    <LinearProgress color="inherit" />
+                }
+                {expanded[file.file_name] && (isNotValid || typeof file.drawing_type === 'string') &&
+                    <>
+                        {typeof file.drawing_type === 'string' &&
+                             <Alert severity="error" icon={<WarningAmberIcon/>}>{file.drawing_type}</Alert>
                         }
-                        </Box>
-                    {expanded[file.file_name] && isNotValid &&
-                        <>
-                            {req.map(r => (
-                                <>
-                                {file[r as keyof UploadedFile]?.length &&
-                                    <Alert severity="warning">{file[r as keyof UploadedFile]}</Alert>
-                                }
-                                </>
-                            ))}
-                        </>
-                    }
+                        {req.map(r => (
+                            <>
+                            {file[r as keyof UploadedFile]?.length &&
+                                <Alert severity="warning" icon={<ErrorOutlineRoundedIcon/>}>{file[r as keyof UploadedFile]}</Alert>
+                            }
+                            </>
+                        ))}
+                    </>
+                }
             </Box>
         )})}
 

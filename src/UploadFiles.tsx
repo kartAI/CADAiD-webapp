@@ -3,7 +3,7 @@ import DropBox from "./Components/DropBox"
 import { UploadedFile } from "./types";
 import Checklist from "./Components/Checklist";
 import ListOfDocs from './ListOfDocuments';
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 
 const UploadFiles = () => {
@@ -56,17 +56,17 @@ const UploadFiles = () => {
 
     return (
         <>
-            <Typography>
+            <Typography variant="subtitle1">
               Din søknad krever følgende byggesakstegninger:
             </Typography>
             <br/>
             <Checklist drawingTypes={drawingTypes}/>
             <br/>
-            <Typography>
+            <Typography variant="body1">
               Last opp:
             </Typography>
     
-            <br/>
+            <Box mt={1}/>
 
             <DropBox
                 onDrop={handleUpload}
