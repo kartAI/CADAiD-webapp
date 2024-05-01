@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  cad-aid-api: 
+    build: ./fast_api
+    volumes:
+      - ./fast_api:/code/
+    ports:
+      - 5001:8080
+  
+  website:
+    image: website
+    ports:
+      - "5000:8080"
+    volumes:
+      - ./website/ngnix.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - cad-aid-api
+  
