@@ -34,7 +34,6 @@ export default function Checklist({drawingTypes}: Props) {
         setOpen(true)
         setType(type)
     }
-    
 
     return(
         <>

@@ -1,20 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DropBox from "./Components/DropBox"
 import { UploadedFile } from "./types";
 import Checklist from "./Components/Checklist";
 import ListOfDocs from './ListOfDocuments';
-import { Box, Typography } from "@mui/material";
-
+import { Box, Dialog, IconButton, Typography } from "@mui/material";
+import { isEmpty } from 'lodash'
+import CloseIcon from '@mui/icons-material/Close';
 
 const UploadFiles = () => {
 
     const [uploadedFiles, setUploadedFiles] = useState<Array<UploadedFile>>([])
     const [loading, setLoading] = useState({})
     const [drawingTypes, setDrawingTypes] = useState<Array<string>>([])
+    const [openDialog, setOpenDialog] = useState(false)
 
     const handleUpload = async(acceptedFiles: File[]) => {
-        
+
+        if (isEmpty(acceptedFiles)) {
+            setOpenDialog(true)
+            return
+        }
+
         const formData = new FormData();
+
         acceptedFiles.forEach((file: File) => {
             formData.append(`uploaded_files`, file, file.name)
             setLoading(l => {return {...l, [file.name]: true}})
@@ -24,14 +32,15 @@ const UploadFiles = () => {
             ...prevUploadedFiles,
             ...acceptedFiles.map(file => {return {'file_name': file.name} as any})
           ])
-        
+    
         const responseApi = await fetch("http://localhost:8000/detect/", {
             method: "POST",
             body: formData,
         });
         const drawingResult = await responseApi.json()
-        console.log(drawingResult)
+
         setUploadedFiles([...uploadedFiles, ...drawingResult])
+
         drawingResult.map((res: UploadedFile) =>  {
             setLoading(l => {return {...l, [res.file_name]: false}})
             if (Array.isArray(res.drawing_type))  setDrawingTypes(t => [...t, ...res.drawing_type as any])
@@ -78,6 +87,23 @@ const UploadFiles = () => {
                 onDelete={handelDeleteUploaded}
                 loading={loading}
             />
+            <Dialog onClose={() => setOpenDialog(false)} open={openDialog}>
+                        
+                Tilatte filer PDF, JPG, JPEG, og PNG.     
+
+                <IconButton
+                    aria-label="close"
+                    onClick={() => setOpenDialog(false)}
+                    sx={{
+                        position: 'absolute',
+                        right: 8,
+                        top: 8,
+                        color: (theme) => theme.palette.grey[500],
+                    }}
+                >
+                    <CloseIcon />
+                </IconButton>
+            </Dialog>
 
         </>
     )

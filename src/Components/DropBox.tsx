@@ -30,14 +30,14 @@ const DropBox = ({ onDrop }: Props) => {
     return (
         
         <Box component="section"sx={{ border: '2px dashed green', borderRadius: '20px'}}>
-            <Box {...getRootProps()} style={{ backgroundColor: 'rgba(30, 116, 0, 0.2)', borderRadius: '20px', cursor: 'pointer'}} >
+            <Box data-testid="dropzone-root" role="presentation" {...getRootProps()} style={{ backgroundColor: 'rgba(30, 116, 0, 0.2)', borderRadius: '20px', cursor: 'pointer'}} >
                 <Box pt={4} pb={4}>
                     <Box display='flex'
                         flexDirection='row'
                         justifyContent='center'
                         alignItems='center'
                         gap={2}>
-                            <input {...getInputProps()} />
+                            <input data-testid="dropzone-input" {...getInputProps()} />
 
                             <Typography variant='subtitle1' textAlign='center' style={{ cursor: 'pointer'}}>
                                Dra og slipp filene dine her, eller <Link color='#1e7400' variant='inherit'>

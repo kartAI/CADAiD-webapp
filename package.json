@@ -7,30 +7,28 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.15.7",
     "@mui/material": "^5.15.6",
-    "@mui/material-next": "^6.0.0-alpha.124",
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
     "@types/react": "^18.2.48",
     "@types/react-dom": "^18.2.18",
+    "lodash": "^4.17.21",
     "react": "^18.2.0",
-    "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
     "react-scripts": "5.0.1",
     "styled-components": "^6.1.8",
-    "web-vitals": "^2.1.4"
+    "ts-node": "^10.9.2"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
-      "react-app",
-      "react-app/jest"
+      "react-app"
     ]
   },
   "browserslist": {
@@ -46,6 +44,6 @@
     ]
   },
   "devDependencies": {
-    "@types/react-beautiful-dnd": "^13.1.8"
+    "@types/lodash": "^4.17.0"
   }
 }
