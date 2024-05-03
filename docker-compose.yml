@@ -7,7 +7,8 @@ services:
       - ./fast_api:/code/
     ports:
       - 5001:8080
-  
+    # deploy: 
+    #   replicas: 2
   website:
     image: website
     ports:
