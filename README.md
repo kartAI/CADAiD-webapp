@@ -33,10 +33,10 @@ To scale the backend(fast_api) you need to add
 deploy: 
   replicas: x
 ```
-  where `x` is the amount of instances of the service are running across the cluster. Place this under cad-aid-api in docker compose. a reverse proxy, like nginx, is needed to make this work. This support many serveses/machines to access the same port.
+  where `x` is the amount of instances of the service are running across the cluster. Place this under cad-aid-api in docker compose. a reverse proxy, like nginx, is needed to make this work. This support many services/machines to access access the same port.
 
 
 ## Future thoughts
 
-Deployment thoughts: Add the contatiners in kubernetes or docker swarn. 
+Deployment thoughts: Add the containers in kubernetes or docker swarn. 
 might be fun to test more microservice architecture, like putting AI models in different docker containers.
