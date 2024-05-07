@@ -1,6 +1,6 @@
 from fastapi.testclient import TestClient
 
-from main import app
+from .main import app
 import os
 
 client = TestClient(app)
@@ -28,12 +28,34 @@ def test_upload_multible_files():
     test_image_paths= ['test_images/situasjonskart.jpg', 'test_images/snitt.jpg']
 
     multiple_files = [('uploaded_files', (os.path.basename(test_image_paths[0]), open(test_image_paths[0], 'rb'), 'image/jpeg')),
-                      ('uploaded_files', (os.path.basename(test_image_paths[1]), open(test_image_paths[0], 'rb'), 'image/jpeg'))]
+                      ('uploaded_files', (os.path.basename(test_image_paths[1]), open(test_image_paths[1], 'rb'), 'image/jpeg'))]
 
     response = client.post("/detect/", files=multiple_files)
 
     assert response.status_code == 200
 
+def test_upload_multible_files_w_correct_and_incorrect_formats():
+    test_image_paths= ['test_images/situasjonskart.jpg', 'test_images/CAD-aid-DEMO.mp4']
+
+    multiple_files = [('uploaded_files', (os.path.basename(test_image_paths[0]), open(test_image_paths[0], 'rb'), 'image/jpeg')),
+                      ('uploaded_files', (os.path.basename(test_image_paths[1]), open(test_image_paths[1], 'rb'), 'image/jpeg'))]
+
+    response = client.post("/detect/", files=multiple_files)
+
+    assert response.status_code == 200
+    assert len(response.json()) == 1
+
+def test_upload_multible_files_with_same_filename():
+    test_image_paths= ['test_images/situasjonskart.jpg']
+
+    multiple_files = [('uploaded_files', (os.path.basename(test_image_paths[0]), open(test_image_paths[0], 'rb'), 'image/jpeg')),
+                      ('uploaded_files', (os.path.basename(test_image_paths[0]), open(test_image_paths[0], 'rb'), 'image/jpeg'))]
+
+    response = client.post("/detect/", files=multiple_files)
+
+    assert response.status_code == 200
+    assert response.json()[0]['file_name'] == 'situasjonskart.jpg'
+    assert response.json()[1]['file_name'] == 'situasjonskart.jpg'
 
 # def test_maxsize():
 #     test_image_path = 'test_images/CAD-aid-DEMO.mp4' 

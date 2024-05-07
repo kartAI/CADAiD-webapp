@@ -5,8 +5,9 @@ from cv2.typing import MatLike
 
 def ada_detection(image: MatLike, file_types):
     obj = {}
-
-    reader = easyocr.Reader(['no'], gpu=False)
+    # torch.cuda.is_available()
+    # print(torch.version.cuda)
+    reader = easyocr.Reader(['no'], gpu=False) #Ops if machine has a Nvidia GPU: gpu='cuda:0' or gpu='cuda:1', install CUDA
     results = reader.readtext(image, width_ths=0.7)
 
     detected_text = []

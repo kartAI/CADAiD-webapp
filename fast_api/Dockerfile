@@ -15,6 +15,7 @@ RUN pip install pdf2image
 RUN pip install pathlib
 RUN pip install regex
 RUN pip install python-multipart
+#RUN pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu117
 
 COPY . /code/
 

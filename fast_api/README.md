@@ -26,3 +26,11 @@ Then, start the application loacly by running:
 ```bash
 uvicorn src.main:app --reload
 ``` 
+
+## Testing
+
+To run pytests, make sure you are in the `fast_api` folder and then run: 
+
+```bash
+pytest
+``` 

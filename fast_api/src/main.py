@@ -67,7 +67,8 @@ def process_file(uploaded_file):
         image = cv2.imread(file_path)
         detection_response.append(detect_and_validate(image, uploaded_file))
 
-    os.remove(file_path)
+    if os.path.exists(file_path):
+        os.remove(file_path)
     if len(detection_response) > 0:
         return detection_response[0]
     return {}
