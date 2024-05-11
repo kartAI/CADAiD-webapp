@@ -3,7 +3,7 @@ import regex
 from .regex_patterns import scale_pattern, cardinal_direction_pattern, room_pattern
 from cv2.typing import MatLike
 
-def ada_detection(image: MatLike, file_types):
+def ocr_model(image: MatLike, file_types):
     obj = {}
     # torch.cuda.is_available()
     # print(torch.version.cuda)

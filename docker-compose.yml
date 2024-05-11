@@ -2,14 +2,14 @@ version: '3'
 
 services:
   cad-aid-api: 
-    build: ./fast_api
+    build: ./api
     volumes:
-      - ./fast_api:/code/
+      - ./api:/code/
     ports:
       - 5001:8080
     # deploy: 
     #   replicas: 2
-  website:
+  cad-aid-website:
     image: website
     ports:
       - "5000:8080"
