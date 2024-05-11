@@ -7,8 +7,8 @@ from .regex_patterns import scale_pattern, cardinal_direction_pattern, room_patt
 from cv2.typing import MatLike
     
 
-def eva_segmentation(image: MatLike, detected_text, detected_text_coordinates):
-    model = YOLO(r"./models/Eva/best.pt")
+def segmentation_model(image: MatLike, detected_text, detected_text_coordinates):
+    model = YOLO(r"./models/segmentation/best.pt")
 
     results = model.track(image, persist=False,conf=0.4)
 

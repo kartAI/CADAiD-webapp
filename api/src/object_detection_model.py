@@ -13,8 +13,8 @@ def find_value(detection: {}, key: str) -> str | float | None:
     return None
 
 
-def nora_detection(image: MatLike) -> list:
-    model = YOLO(r"./models/Nora/best.pt")
+def object_detection_model(image: MatLike) -> list:
+    model = YOLO(r"./models/object_detection/best.pt")
 
     drawing_types = []
 
