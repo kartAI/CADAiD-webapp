@@ -6,7 +6,7 @@
 
 ## Installation
 
-To install the required dependencies, navigate to the `fast_api` folder and run:
+To install the required dependencies, navigate to the `api` folder and run:
 
 ```bash
 pip install -r requirements.txt
@@ -18,7 +18,7 @@ Ops `poppler` is also a required dependency. follow the guide on [a link](https:
 Make sure you are on the right path.
 
 ```bash
-cd fast_api
+cd api
 ``` 
 
 Then, start the application loacly by running:
@@ -29,7 +29,7 @@ uvicorn src.main:app --reload
 
 ## Testing
 
-To run pytests, make sure you are in the `fast_api` folder and then run: 
+To run pytests, make sure you are in the `api` folder and then run: 
 
 ```bash
 pytest
